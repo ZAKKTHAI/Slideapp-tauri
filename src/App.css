@@ -1,0 +1,311 @@
+
+:root {
+  font-family: Inter, "Segoe UI", sans-serif;
+  color: #f4f4f5;
+  background: #09090b;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.home-screen {
+  width: min(100% - 40px, 680px);
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 0 32px;
+}
+
+.home-header {
+  margin-bottom: 42px;
+}
+
+.home-header h1 {
+  margin: 0;
+  font-size: clamp(36px, 6vw, 54px);
+  font-weight: 750;
+  letter-spacing: -2px;
+}
+
+.home-header p {
+  margin: 12px 0 0;
+  color: #a1a1aa;
+  font-size: 15px;
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.menu-card {
+  overflow: hidden;
+  border: 1px solid #303036;
+  border-radius: 16px;
+  background: #141417;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.menu-card:hover {
+  border-color: #52525b;
+  background: #19191e;
+}
+
+.menu-card.expanded {
+  border-color: #52525b;
+}
+
+.menu-button,
+.submenu-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+  padding: 22px;
+  border: 0;
+  color: #f4f4f5;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-icon {
+  display: grid;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 12px;
+  font-size: 27px;
+  background: #27272a;
+}
+
+.create-icon {
+  color: #f9a8d4;
+}
+
+.present-icon {
+  color: #a5b4fc;
+}
+
+.menu-button-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.menu-button-text strong {
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.menu-button-text small {
+  color: #a1a1aa;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.menu-chevron {
+  color: #a1a1aa;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 12px 12px;
+  animation: submenu-enter 180ms ease-out;
+}
+
+.submenu-button {
+  gap: 14px;
+  padding: 17px 14px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+}
+
+.submenu-button:hover {
+  background: #27272a;
+  border-color: #3f3f46;
+}
+
+.submenu-icon {
+  display: grid;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 9px;
+  color: #f9a8d4;
+  background: #303036;
+  font-size: 20px;
+}
+
+.home-footer {
+  margin-top: 48px;
+  color: #52525b;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.placeholder-screen {
+  display: grid;
+  min-height: 100vh;
+  padding: 24px;
+  place-items: center;
+}
+
+.placeholder-card {
+  width: min(100%, 480px);
+  padding: 36px;
+  border: 1px solid #303036;
+  border-radius: 18px;
+  background: #141417;
+}
+
+.placeholder-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 12px;
+  color: #f9a8d4;
+  background: #27272a;
+  font-size: 25px;
+}
+
+.placeholder-label {
+  margin-top: 28px;
+  color: #a1a1aa;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.placeholder-card h1 {
+  margin: 12px 0;
+  font-size: 30px;
+}
+
+.placeholder-description {
+  color: #a1a1aa;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.coming-soon {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 7px 12px;
+  border: 1px solid #3f3f46;
+  border-radius: 999px;
+  color: #d4d4d8;
+  font-size: 12px;
+}
+
+.back-button {
+  display: block;
+  width: 100%;
+  margin-top: 32px;
+  padding: 12px 16px;
+  border: 1px solid #3f3f46;
+  border-radius: 10px;
+  color: #f4f4f5;
+  background: #27272a;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.back-button:hover {
+  background: #3f3f46;
+}
+
+.back-button span {
+  margin-right: 8px;
+}
+
+@keyframes submenu-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .home-screen {
+    width: calc(100% - 28px);
+    padding-top: 40px;
+  }
+
+  .home-header {
+    margin-bottom: 30px;
+  }
+
+  .menu-button {
+    gap: 12px;
+    padding: 17px;
+  }
+
+  .menu-icon {
+    flex-basis: 42px;
+    width: 42px;
+    height: 42px;
+  }
+
+  .menu-button-text strong {
+    font-size: 14px;
+  }
+
+  .menu-button-text small {
+    font-size: 12px;
+  }
+
+  .placeholder-card {
+    padding: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,91 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  background: #09090b;
+  color: #fafafa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 640px;
+  min-height: 100vh;
+}
+
+button {
+  border: 1px solid #52525b;
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: inherit;
+  background: #27272a;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #3f3f46;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 16px;
+  gap: 16px;
+}
+
+.toolbar,
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toolbar {
+  justify-content: space-between;
+}
+
+.slide-host {
+  container-type: size;
+  position: relative;
+  width: min(100%, 1440px);
+  aspect-ratio: 16 / 9;
+  margin: auto;
+  overflow: hidden;
+  border: 1px solid #3f3f46;
+  border-radius: 12px;
+  background: #18181b;
+}
+
+.slide-canvas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: size;
+  animation: slide-fade-in 250ms ease-out;
+}
+
+.slide-text {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.error-message {
+  color: #fca5a5;
+}
+
+@keyframes slide-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide-canvas {
+    animation: none;
+  }
+}

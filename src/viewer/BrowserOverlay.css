@@ -1,0 +1,73 @@
+.browser-overlay {
+  position: absolute;
+  z-index: 100;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #18181b;
+  color: #fafafa;
+  border-radius: 8px;
+}
+
+.browser-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: #27272a;
+}
+
+.browser-address {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.browser-address span {
+  color: #a1a1aa;
+  font-size: 12px;
+}
+
+.browser-address input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid #52525b;
+  border-radius: 6px;
+  background: #09090b;
+  color: #fafafa;
+  font: inherit;
+}
+
+.browser-toolbar button {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: #fafafa;
+  color: #18181b;
+  cursor: pointer;
+}
+
+.browser-error {
+  margin: 0;
+  padding: 8px 12px;
+  color: #fca5a5;
+  font-size: 13px;
+}
+
+.browser-host {
+  flex: 1;
+  min-height: 240px;
+  background: #fff;
+}
+
+.viewer-stage {
+  position: relative;
+}

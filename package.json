@@ -1,0 +1,35 @@
+{
+  "name": "slideapp-tauri",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-dialog": "^2.8.3",
+    "@tauri-apps/plugin-fs": "^2.7.1",
+    "@tauri-apps/plugin-opener": "^2",
+    "fflate": "^0.8.3",
+    "jquery": "^3.7.1",
+    "markdown-it": "^15.0.3",
+    "owl.carousel": "^2.3.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "slick-carousel": "^1.8.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "@types/jquery": "^3.5.32",
+    "@types/markdown-it": "^14.2.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^6.0.2",
+    "typescript": "~6.0.3",
+    "vite": "^8.0.16"
+  }
+}

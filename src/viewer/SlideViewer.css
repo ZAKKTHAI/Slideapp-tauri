@@ -1,0 +1,320 @@
+
+.viewer-screen {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #09090b;
+  color: #f4f4f5;
+  font-family: Inter, "Segoe UI", sans-serif;
+}
+
+.viewer-header,
+.viewer-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  flex-shrink: 0;
+}
+
+.viewer-header {
+  border-bottom: 1px solid #27272a;
+}
+
+.viewer-project-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  color: #a1a1aa;
+}
+
+.viewer-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.viewer-header-actions label {
+  color: #a1a1aa;
+  font-size: 12px;
+}
+
+.viewer-header button,
+.viewer-header select,
+.viewer-controls button {
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+  padding: 8px 14px;
+  background: #18181b;
+  color: #f4f4f5;
+  font: inherit;
+  font-size: 13px;
+}
+
+.viewer-header button,
+.viewer-controls button {
+  cursor: pointer;
+}
+
+.viewer-header button:hover,
+.viewer-controls button:hover:not(:disabled) {
+  background: #27272a;
+}
+
+.viewer-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.viewer-carousel {
+  width: min(100%, calc((100dvh - 150px) * 16 / 9));
+  min-width: 0;
+  margin: 0 auto;
+}
+
+.viewer-carousel-item {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #09090b;
+}
+
+.viewer-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #09090b;
+  box-shadow: 0 20px 80px rgb(0 0 0 / 35%);
+  pointer-events: none;
+}
+
+/* Slick */
+.viewer-carousel--slick .slick-list {
+  overflow: hidden;
+}
+
+.viewer-carousel--slick .slick-track {
+  display: flex;
+  align-items: center;
+}
+
+.viewer-carousel--slick .slick-slide {
+  height: auto;
+}
+
+.viewer-carousel--slick .slick-slide > div {
+  width: 100%;
+}
+
+.viewer-carousel--slick .slick-prev,
+.viewer-carousel--slick .slick-next {
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+}
+
+.viewer-carousel--slick .slick-prev {
+  left: 12px;
+}
+
+.viewer-carousel--slick .slick-next {
+  right: 12px;
+}
+
+.viewer-carousel--slick .slick-prev::before,
+.viewer-carousel--slick .slick-next::before {
+  color: #ffffff;
+  font-size: 28px;
+  opacity: 0.9;
+}
+
+.viewer-carousel--slick .slick-dots {
+  bottom: -34px;
+}
+
+.viewer-carousel--slick .slick-dots li {
+  margin: 0 3px;
+}
+
+.viewer-carousel--slick .slick-dots li button::before {
+  color: #a1a1aa;
+  font-size: 8px;
+  opacity: 0.65;
+}
+
+.viewer-carousel--slick .slick-dots li.slick-active button::before {
+  color: #ffffff;
+  opacity: 1;
+}
+
+/* Owl Carousel 2 */
+.viewer-carousel--owl .owl-stage {
+  display: flex;
+  align-items: center;
+}
+
+.viewer-carousel--owl .owl-item {
+  display: flex;
+  align-items: center;
+}
+
+.viewer-carousel--owl .owl-nav {
+  margin: 0;
+}
+
+.viewer-carousel--owl .owl-nav button.owl-prev,
+.viewer-carousel--owl .owl-nav button.owl-next {
+  position: absolute;
+  top: 50%;
+  width: 38px;
+  height: 38px;
+  transform: translateY(-50%);
+  border: 1px solid #3f3f46;
+  border-radius: 50%;
+  background: rgb(24 24 27 / 90%);
+  color: #ffffff;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.viewer-carousel--owl .owl-nav button.owl-prev {
+  left: 12px;
+}
+
+.viewer-carousel--owl .owl-nav button.owl-next {
+  right: 12px;
+}
+
+.viewer-carousel--owl .owl-nav button:hover {
+  background: #3f3f46;
+}
+
+.viewer-carousel--owl .owl-dots {
+  margin-top: 12px;
+}
+
+.viewer-carousel--owl .owl-dots .owl-dot span {
+  width: 8px;
+  height: 8px;
+  margin: 5px;
+  background: #71717a;
+  opacity: 0.7;
+  transition:
+    background-color 200ms ease,
+    transform 200ms ease,
+    opacity 200ms ease;
+}
+
+.viewer-carousel--owl .owl-dots .owl-dot.active span {
+  background: #ffffff;
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.viewer-controls {
+  justify-content: center;
+  border-top: 1px solid #27272a;
+}
+
+.viewer-controls button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.viewer-counter {
+  min-width: 80px;
+  text-align: center;
+  font-size: 13px;
+  color: #a1a1aa;
+  font-variant-numeric: tabular-nums;
+}
+
+.viewer-screen:fullscreen {
+  background: #09090b;
+}
+
+.viewer-screen:fullscreen .viewer-header,
+.viewer-screen:fullscreen .viewer-controls {
+  background: #09090b;
+}
+
+@media (max-width: 600px) {
+  .viewer-header,
+  .viewer-controls {
+    padding: 10px;
+  }
+
+  .viewer-header {
+    align-items: flex-start;
+  }
+
+  .viewer-header-actions {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .viewer-header button,
+  .viewer-header select {
+    padding: 7px 9px;
+  }
+
+  .viewer-stage {
+    padding: 8px;
+  }
+
+  .viewer-carousel {
+    width: 100%;
+  }
+
+  .viewer-carousel--slick .slick-prev {
+    left: 4px;
+  }
+
+  .viewer-carousel--slick .slick-next {
+    right: 4px;
+  }
+
+  .viewer-carousel--owl .owl-nav button.owl-prev {
+    left: 4px;
+  }
+
+  .viewer-carousel--owl .owl-nav button.owl-next {
+    right: 4px;
+  }
+}
+/* ブラウザスライドでは通常のスライド用余白をなくす */
+.viewer-stage--browser {
+  padding: 0;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+/* ブラウザの表示領域 */
+.viewer-stage--browser .browser-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  border-radius: 0;
+}
+
+/* ネイティブWebViewの領域を確保 */
+.viewer-stage--browser .browser-host {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}

@@ -1,0 +1,140 @@
+
+/* ===== Slide Base ===== */
+.slide-canvas {
+  color: #f4f4f5;
+  font-family: Inter, "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+
+/* ===== Headings ===== */
+.slide-canvas h1 {
+  margin: 0 0 32px;
+  font-size: 76px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.slide-canvas h2 {
+  margin: 0 0 24px;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.slide-canvas h3 {
+  margin: 0 0 16px;
+  font-size: 36px;
+  font-weight: 650;
+}
+
+/* ===== Text ===== */
+.slide-canvas p {
+  margin: 0 0 24px;
+  font-size: 30px;
+}
+
+.slide-canvas strong {
+  color: #ff4d8d;
+  font-weight: 750;
+}
+
+.slide-canvas a {
+  color: #ff79aa;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+/* ===== Lists ===== */
+.slide-canvas ul,
+.slide-canvas ol {
+  padding-left: 1.3em;
+  margin: 20px 0;
+}
+
+.slide-canvas li {
+  margin: 12px 0;
+  padding-left: 8px;
+}
+
+/* ===== Blockquote ===== */
+.slide-canvas blockquote {
+  margin: 28px 0;
+  padding: 20px 28px;
+  border-left: 6px solid #ff4d8d;
+  border-radius: 0 12px 12px 0;
+  background: #18181b;
+  color: #d4d4d8;
+}
+
+/* ===== Code ===== */
+.slide-canvas pre {
+  padding: 24px;
+  border: 1px solid #3f3f46;
+  border-radius: 14px;
+  background: #18181b;
+  font-size: 24px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.slide-canvas code {
+  font-family: "JetBrains Mono", monospace;
+}
+
+.slide-canvas :not(pre) > code {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #27272a;
+  color: #f9a8d4;
+  font-size: 0.85em;
+}
+
+/* ===== Tables ===== */
+.slide-canvas table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 26px;
+}
+
+.slide-canvas th,
+.slide-canvas td {
+  padding: 14px 18px;
+  border: 1px solid #52525b;
+  text-align: left;
+}
+
+.slide-canvas th {
+  background: #27272a;
+  color: #ff79aa;
+}
+
+/* ===== Media ===== */
+.slide-canvas img,
+.slide-canvas video {
+  max-width: 100%;
+  max-height: 720px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* ===== Horizontal Rule ===== */
+.slide-canvas hr {
+  height: 2px;
+  margin: 32px 0;
+  border: 0;
+  background: #3f3f46;
+}
+
+/* ===== Selection / Emphasis ===== */
+.slide-canvas mark {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #831843;
+  color: #fff1f2;
+}
+
+.slide-canvas em {
+  color: #d4d4d8;
+}
