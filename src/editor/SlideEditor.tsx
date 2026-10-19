@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState, KeyboardEvent } from "react";
-import type { SlideDefinition } from "../core/slide-types";
 import { createSlidePreviewDocument } from "../renderer/render-slide-content";
 import "./SlideEditor.css";
 import { open, save } from "@tauri-apps/plugin-dialog";
@@ -13,8 +12,11 @@ import {
   resolveAssetsToDataUrls,
 } from "../core/slide-assets";
 import { createProjectArchive } from "../core/project-archive";
-import type { SlideDocument } from "../core/slide-types";
-
+import type {
+  SlideDefinition,
+  SlideDocument,
+  SlideTheme,
+} from "../core/slide-types";
 
 const INITIAL_SOURCE = `<section class="hero">
   <md>
@@ -100,6 +102,16 @@ export default function SlideEditor({
 
   const [webAiMenuOpen, setWebAiMenuOpen] = useState(false);
 
+
+  const [sharedCss, setSharedCss] = useState(
+    () => initialDocument?.sharedCss ?? "",
+  );
+
+  const [theme, setTheme] = useState<SlideTheme>(
+    () => initialDocument?.theme ?? "dark",
+  );
+
+  const [draggingId, setDraggingId] = useState<string | null>(null);
   const activeSlide =
     slides.find((slide) => slide.id === activeId) ?? slides[0];
 
@@ -148,6 +160,8 @@ export default function SlideEditor({
         version: 1,
         title: "MyPresentation",
         slides,
+        sharedCss,
+        theme,
         assets,
       };
 
@@ -166,7 +180,7 @@ export default function SlideEditor({
     } finally {
       isSavingRef.current = false;
     }
-  }, [slides, assets]);
+  }, [slides, assets, sharedCss, theme]);
 
   useEffect(() => {
     lastSourceRef.current = activeSlide.content ?? "";
@@ -175,21 +189,19 @@ export default function SlideEditor({
   const previewDocument = useMemo(
     () =>
       createSlidePreviewDocument(
-        resolveAssetsToDataUrls(
-          activeSlide.content ?? "",
-          assets,
-        ),
+        resolveAssetsToDataUrls(activeSlide.content ?? "", assets),
         activeSlide.background,
-        resolveAssetsToDataUrls(
-          activeSlide.css ?? "",
-          assets,
-        ),
+        resolveAssetsToDataUrls(activeSlide.css ?? "", assets),
+        resolveAssetsToDataUrls(sharedCss, assets),
+        theme,
       ),
     [
       activeSlide.content,
       activeSlide.background,
       activeSlide.css,
       assets,
+      sharedCss,
+      theme,
     ],
   );
 
@@ -663,6 +675,26 @@ export default function SlideEditor({
       },
     };
   }
+  const reorderSlides = (sourceId: string, targetId: string) => {
+    if (sourceId === targetId) return;
+
+    setSlides((current) => {
+      const from = current.findIndex((slide) => slide.id === sourceId);
+      const to = current.findIndex((slide) => slide.id === targetId);
+
+      if (from < 0 || to < 0) return current;
+
+      const next = [...current];
+      const [moved] = next.splice(from, 1);
+      next.splice(to, 0, moved);
+      return next;
+    });
+  };
+  const dragPointerRef = useRef<{
+    id: string;
+    startY: number;
+    lastY: number;
+  } | null>(null);
 
 
   return (
@@ -688,6 +720,18 @@ export default function SlideEditor({
             type="button"
           >
             {previewVisible ? "プレビューを隠す" : "プレビューを表示"}
+          </button>
+
+          <button
+            className="toolbar-button"
+            type="button"
+            onClick={() =>
+              setTheme((current) =>
+                current === "dark" ? "light" : "dark"
+              )
+            }
+          >
+            {theme === "dark" ? "☀ ホワイトモード" : "☾ ダークモード"}
           </button>
 
           <button
@@ -733,9 +777,94 @@ export default function SlideEditor({
               <div
                 className={`slide-list-item ${
                   slide.id === activeId ? "selected" : ""
-                }`}
+                } ${draggingId === slide.id ? "dragging" : ""}`}
                 key={slide.id}
+                data-slide-id={slide.id}
+                onDragEnter={(event) => {
+                  event.preventDefault();
+                }}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  event.dataTransfer.dropEffect = "move";
+                }}
+                onDrop={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+
+                  const sourceId = event.dataTransfer.getData("text/plain");
+
+                  console.log("Drop event:", {
+                    sourceId,
+                    targetId: slide.id,
+                  });
+
+                  if (sourceId && sourceId !== slide.id) {
+                    reorderSlides(sourceId, slide.id);
+                  }
+
+                  setDraggingId(null);
+
+                  console.log("Drop:", { sourceId, targetId: slide.id });
+
+                  if (sourceId) {
+                    reorderSlides(sourceId, slide.id);
+                  }
+
+                  setDraggingId(null);
+                }}
               >
+                <button
+                  className="slide-drag-handle"
+                  type="button"
+                  title="ドラッグして並べ替え"
+                  aria-label={`${slide.title}を並べ替え`}
+                  onPointerDown={(event) => {
+                    if (event.button !== 0) return;
+
+                    event.preventDefault();
+
+                    dragPointerRef.current = {
+                      id: slide.id,
+                      startY: event.clientY,
+                      lastY: event.clientY,
+                    };
+
+                    setDraggingId(slide.id);
+                    event.currentTarget.setPointerCapture(event.pointerId);
+                  }}
+                  onPointerMove={(event) => {
+                    const drag = dragPointerRef.current;
+                    if (!drag) return;
+
+                    drag.lastY = event.clientY;
+
+                    const items = Array.from(
+                      document.querySelectorAll<HTMLElement>(".slide-list-item"),
+                    );
+
+                    const target = items.find((item) => {
+                      const rect = item.getBoundingClientRect();
+                      return event.clientY >= rect.top && event.clientY <= rect.bottom;
+                    });
+
+                    const targetId = target?.dataset.slideId;
+
+                    if (targetId && targetId !== drag.id) {
+                      reorderSlides(drag.id, targetId);
+                    }
+                  }}
+                  onPointerUp={() => {
+                    dragPointerRef.current = null;
+                    setDraggingId(null);
+                  }}
+                  onPointerCancel={() => {
+                    dragPointerRef.current = null;
+                    setDraggingId(null);
+                  }}
+                >
+                  ⠿
+                </button>
+
                 <button
                   className="slide-select"
                   onClick={() => selectSlide(slide.id)}
@@ -744,9 +873,7 @@ export default function SlideEditor({
                   <span className="slide-number">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <span className="slide-list-title">
-                    {slide.title}
-                  </span>
+                  <span className="slide-list-title">{slide.title}</span>
                 </button>
 
                 <button
@@ -999,7 +1126,7 @@ export default function SlideEditor({
               value={
                 sourceMode === "html"
                   ? activeSlide.content ?? ""
-                  : activeSlide.css ?? ""
+                  : sharedCss
               }
               onChange={(event) => {
                 const value = event.target.value;
@@ -1007,7 +1134,7 @@ export default function SlideEditor({
                 if (sourceMode === "html") {
                   handleSourceChange(value);
                 } else {
-                  updateActiveSlide({ css: value });
+                  setSharedCss(value);
                 }
               }}
             />

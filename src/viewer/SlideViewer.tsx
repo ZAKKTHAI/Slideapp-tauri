@@ -330,8 +330,12 @@ export default function SlideViewer({
           </div>
         )}
         <BrowserOverlay
-          visible={browserVisible}
-          initialUrl="https://example.com"
+          visible={browserVisible || Boolean(slides[activeIndex]?.browser)}
+          initialUrl={
+            browserVisible
+              ? "https://www.google.com/"
+              : slides[activeIndex]?.browser?.url ?? "https://example.com"
+          }
         />
       </section>
 

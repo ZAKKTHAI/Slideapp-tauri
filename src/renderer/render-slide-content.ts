@@ -26,27 +26,49 @@ export function renderSlideContent(source: string): string {
  * プレビューの HTML 文書を生成する。
  * 1920 × 1080 のキャンバス内でスライドを表示する。
  */
+import type { SlideTheme } from "../core/slide-types";
+
 export function createSlidePreviewDocument(
   source: string,
   background = "#09090b",
   customCss = "",
+  sharedCss = "",
+  theme: SlideTheme = "dark",
 ): string {
   const renderedContent = renderSlideContent(source);
 
-  // CSS の文字列として扱うため、背景色の形式を限定する。
   const safeBackground = /^#[0-9a-fA-F]{3,8}$/.test(background)
     ? background
     : "#09090b";
 
+  const themeCss = theme === "light"
+    ? `
+      --text: #171717;
+      --muted: #52525b;
+      --panel: #f3f4f6;
+      --border: #d4d4d8;
+      --code-bg: #e4e4e7;
+      --slide-bg: #ffffff;
+    `
+    : `
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+      --panel: #18181b;
+      --border: #52525b;
+      --code-bg: #18181b;
+      --slide-bg: ${safeBackground};
+    `;
+
   return `<!doctype html>
-<html lang="ja">
+<html lang="ja" data-theme="${theme}">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    :root {
+      ${themeCss}
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -59,8 +81,8 @@ export function createSlidePreviewDocument(
 
     body {
       overflow: hidden;
-      color: #f4f4f5;
-      background: ${safeBackground};
+      color: var(--text);
+      background: var(--slide-bg);
       font-family: Inter, "Segoe UI", sans-serif;
     }
 
@@ -72,6 +94,8 @@ export function createSlidePreviewDocument(
       transform-origin: top left;
       font-size: 30px;
       line-height: 1.6;
+      color: var(--text);
+      background: var(--slide-bg);
     }
 
     .slide-canvas h1 {
@@ -79,13 +103,8 @@ export function createSlidePreviewDocument(
       line-height: 1.15;
     }
 
-    .slide-canvas h2 {
-      font-size: 52px;
-    }
-
-    .slide-canvas h3 {
-      font-size: 38px;
-    }
+    .slide-canvas h2 { font-size: 52px; }
+    .slide-canvas h3 { font-size: 38px; }
 
     .slide-canvas img,
     .slide-canvas video {
@@ -97,7 +116,7 @@ export function createSlidePreviewDocument(
       padding: 24px;
       overflow: hidden;
       border-radius: 12px;
-      background: #18181b;
+      background: var(--code-bg);
       font-size: 24px;
     }
 
@@ -113,10 +132,14 @@ export function createSlidePreviewDocument(
     .slide-canvas th,
     .slide-canvas td {
       padding: 12px 16px;
-      border: 1px solid #52525b;
+      border: 1px solid var(--border);
       text-align: left;
     }
-    /* User CSS */
+
+    /* 全スライド共通CSS */
+    ${sharedCss}
+
+    /* 旧プロジェクトのスライド専用CSS */
     ${customCss}
   </style>
 </head>
@@ -134,13 +157,9 @@ export function createSlidePreviewDocument(
           window.innerHeight / 1080
         );
 
-        canvas.style.transform =
-          "scale(" + scale + ")";
-
-        document.body.style.width =
-          (1920 * scale) + "px";
-        document.body.style.height =
-          (1080 * scale) + "px";
+        canvas.style.transform = "scale(" + scale + ")";
+        document.body.style.width = (1920 * scale) + "px";
+        document.body.style.height = (1080 * scale) + "px";
       }
 
       window.addEventListener("resize", resizeCanvas);

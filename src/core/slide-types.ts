@@ -36,16 +36,14 @@ export interface SlideDefinition {
   // ブラウザスライド用。通常スライドでは省略。
   browser?: BrowserSlideConfig;
 }
+export type SlideTheme = "dark" | "light";
 
 export interface SlideDocument {
   version: 1;
   title: string;
   slides: SlideDefinition[];
-
-  /**
-   * キーは assets/ から始まる相対パス。
-   * 値は data URL。ZIP 保存時には画像を独立ファイルに変換する。
-   */
+  sharedCss?: string;
+  theme?: SlideTheme;
   assets?: Record<string, string>;
 }
 export interface BrowserSlideConfig {

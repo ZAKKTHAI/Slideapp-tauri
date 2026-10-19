@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { Webview } from "@tauri-apps/api/webview";
 import { LogicalPosition, LogicalSize } from "@tauri-apps/api/dpi";
@@ -31,23 +31,8 @@ export default function BrowserOverlay({
   const hostRef = useRef<HTMLDivElement>(null);
   const webviewRef = useRef<Webview | null>(null);
 
-  const [urlInput, setUrlInput] = useState(initialUrl);
   const [error, setError] = useState("");
 
-  const [activeUrl, setActiveUrl] = useState(initialUrl);
-
-  const navigate = useCallback(() => {
-    const url = normalizeUrl(urlInput);
-
-    if (!url) {
-      setError("HTTP / HTTPS のURLを入力してください。");
-      return;
-    }
-
-    setUrlInput(url);
-    setError("");
-    setActiveUrl(url);
-  }, [urlInput]);
 
   useEffect(() => {
     if (!visible || !hostRef.current) {
@@ -55,7 +40,7 @@ export default function BrowserOverlay({
     }
 
     const host = hostRef.current;
-    const initial = normalizeUrl(activeUrl);
+    const initial = normalizeUrl(initialUrl);
 
     if (!initial) {
       setError("初期URLが不正です。");
@@ -149,13 +134,6 @@ export default function BrowserOverlay({
         console.error("Browser close failed:", reason);
       });
     };
-  }, [visible, activeUrl]);
-
-  useEffect(() => {
-    if (!visible) return;
-
-    const url = normalizeUrl(initialUrl);
-    if (url) setUrlInput(url);
   }, [visible, initialUrl]);
 
   if (!visible) {
@@ -164,26 +142,6 @@ export default function BrowserOverlay({
 
   return (
     <section className="browser-overlay">
-      <form
-        className="browser-toolbar"
-        onSubmit={(event) => {
-          event.preventDefault();
-          navigate();
-        }}
-      >
-        <label className="browser-address">
-          <span>URL</span>
-          <input
-            value={urlInput}
-            onChange={(event) => setUrlInput(event.target.value)}
-            placeholder="https://example.com"
-            spellCheck={false}
-          />
-        </label>
-
-        <button type="submit">移動</button>
-      </form>
-
       {error && <p className="browser-error">{error}</p>}
 
       <div

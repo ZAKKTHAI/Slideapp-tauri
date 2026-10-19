@@ -154,7 +154,6 @@
   padding: 12px 8px;
   overflow-y: auto;
 }
-
 .slide-list-item {
   display: flex;
   align-items: center;
@@ -626,4 +625,59 @@
 
 .web-ai-menu-list button:hover {
   background: rgb(127 127 127 / 15%);
+}
+.slide-list-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.slide-drag-handle {
+  flex: 0 0 28px;
+  padding: 8px 4px;
+  border: 0;
+  border-radius: 6px;
+  color: #a1a1aa;
+  background: transparent;
+  font-size: 20px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.slide-drag-handle:active {
+  cursor: grabbing;
+}
+
+.slide-select {
+  flex: 1;
+  min-width: 0;
+}
+
+.slide-list-item.dragging {
+  opacity: 0.4;
+}
+.slide-drag-handle:hover {
+  color: var(--text);
+  background: #27272a;
+}
+
+.slide-drag-handle:active {
+  cursor: grabbing;
+}
+
+.slide-select {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px 8px;
+  border: 0;
+  color: var(--text);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
 }
