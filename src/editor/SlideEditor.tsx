@@ -15,7 +15,6 @@ import {
 import { createProjectArchive } from "../core/project-archive";
 import type { SlideDocument } from "../core/slide-types";
 
-const DEFAULT_BROWSER_URL = "https://chatgpt.com/";
 
 const INITIAL_SOURCE = `<section class="hero">
   <md>

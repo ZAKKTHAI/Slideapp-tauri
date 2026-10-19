@@ -10,7 +10,6 @@ import "slick-carousel/slick/slick-theme.css";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 
-import SlideFrame from "./SlideFrame";
 
 import { resolveAssetsToDataUrls } from "../core/slide-assets";
 
